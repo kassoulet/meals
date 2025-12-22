@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabase/server';
+import { supabase } from '@/lib/supabase/client';
 
 export default function HouseholdsPage() {
   const [households, setHouseholds] = useState<any[]>([]);
@@ -13,13 +13,33 @@ export default function HouseholdsPage() {
     const fetchHouseholds = async () => {
       try {
         setLoading(true);
-        // This is a placeholder implementation
-        // In a real app, we would fetch from the API
-        const mockHouseholds = [
-          { id: '1', name: 'Family Home', created_at: '2023-01-15' },
-          { id: '2', name: 'Vacation House', created_at: '2023-03-22' },
-        ];
-        setHouseholds(mockHouseholds);
+
+        // Get the current user
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) {
+          throw new Error('User not authenticated');
+        }
+
+        // Fetch households where the user is a member
+        const { data, error } = await supabase
+          .from('household_members')
+          .select(`
+            id,
+            household_id,
+            households (id, name, created_at)
+          `)
+          .eq('user_id', user.id);
+
+        if (error) throw error;
+
+        // Extract household information from the response
+        const householdsData = data.map((item: any) => ({
+          id: item.households.id,
+          name: item.households.name,
+          created_at: item.households.created_at
+        }));
+
+        setHouseholds(householdsData);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch households');
       } finally {
