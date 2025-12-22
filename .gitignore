@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env*
+!.env.example
+
+# Next.js
+.next/
+out/
+
+# Testing
+coverage/
+junit.xml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+public/dist/
+
+# Supabase
+supabase/
+
+# Database
+*.db
+*.db-journal
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
