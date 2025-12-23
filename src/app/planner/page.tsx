@@ -203,7 +203,7 @@ export default function PlannerPage() {
                   meals={meals}
                   householdId={selectedHouseholdId || ''}
                   startDate={currentWeekStart}
-                  onSlotUpdate={updateSlot}
+                  onSlotUpdate={(slot) => updateSlot(slot.id, slot)}
                   onSlotToggle={(slotId, updates) => updateSlot(slotId, updates)}
                   onSlotAssignMeal={(slotId, mealId) => updateSlot(slotId, { meal_id: mealId })}
                 />
