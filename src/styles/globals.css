@@ -4,15 +4,23 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 249, 250, 251;
+  --card-bg-rgb: 255, 255, 255;
+  --border-color-rgb: 229, 231, 235;
+  --primary-color-rgb: 37, 99, 235; /* blue-600 */
+  --secondary-color-rgb: 75, 85, 99; /* gray-600 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 17, 17, 17;
+    --background-end-rgb: 31, 31, 31;
+    --card-bg-rgb: 31, 31, 31;
+    --border-color-rgb: 75, 85, 99;
+    --primary-color-rgb: 96, 165, 250; /* blue-400 */
+    --secondary-color-rgb: 209, 213, 219; /* gray-300 */
   }
 }
 
@@ -24,4 +32,86 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode specific overrides for Tailwind classes */
+.dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--background-start-rgb) / var(--tw-bg-opacity));
+  color: rgb(var(--foreground-rgb) / var(--tw-text-opacity, 1));
+}
+
+/* Card backgrounds */
+.bg-white {
+  @apply dark:bg-gray-800;
+}
+
+.bg-gray-50 {
+  @apply dark:bg-gray-900;
+}
+
+/* Border colors */
+.border-gray-200 {
+  @apply dark:border-gray-700;
+}
+
+.border-gray-300 {
+  @apply dark:border-gray-600;
+}
+
+/* Text colors */
+.text-gray-900 {
+  @apply dark:text-gray-100;
+}
+
+.text-gray-700 {
+  @apply dark:text-gray-300;
+}
+
+.text-gray-600 {
+  @apply dark:text-gray-400;
+}
+
+.text-gray-500 {
+  @apply dark:text-gray-400;
+}
+
+.text-gray-400 {
+  @apply dark:text-gray-500;
+}
+
+/* Button colors */
+.bg-blue-600 {
+  @apply dark:bg-blue-700;
+}
+
+.hover\:bg-blue-700 {
+  @apply dark:hover:bg-blue-600;
+}
+
+.bg-red-600 {
+  @apply dark:bg-red-700;
+}
+
+.hover\:bg-red-700 {
+  @apply dark:hover:bg-red-600;
+}
+
+/* Shadow colors */
+.shadow {
+  @apply dark:shadow-gray-900/20;
+}
+
+.shadow-sm {
+  @apply dark:shadow-gray-900/20;
+}
+
+/* Input focus colors */
+.focus\:ring-blue-500 {
+  @apply dark:focus:ring-blue-500;
+}
+
+.focus\:border-blue-500 {
+  @apply dark:focus:border-blue-500;
 }

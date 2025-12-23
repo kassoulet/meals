@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
+import DarkModeToggle from '@/components/ui/DarkModeToggle';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,14 +15,14 @@ export default function LoginPage() {
     try {
       setLoading(true);
       setError(null);
-      
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
           redirectTo: `${window.location.origin}/dashboard`,
         },
       });
-      
+
       if (error) throw error;
     } catch (error) {
       console.error('Login error:', error);
@@ -31,25 +32,34 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Header with dark mode toggle */}
+      <header className="absolute top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-end h-16 items-center">
+            <DarkModeToggle />
+          </div>
+        </div>
+      </header>
+
+      <div className="max-w-md w-full space-y-8 mt-16">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
             Sign in to your account
           </h2>
           {error && (
-            <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md">
+            <div className="mt-4 p-3 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-100 rounded-md">
               {error}
             </div>
           )}
         </div>
-        
-        <div className="mt-8 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+
+        <div className="mt-8 bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <div className="space-y-4">
             <button
               onClick={() => handleSocialLogin('google')}
               disabled={loading}
-              className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+              className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50"
             >
               {loading ? (
                 <span>Processing...</span>
@@ -65,11 +75,11 @@ export default function LoginPage() {
                 </>
               )}
             </button>
-            
+
             <button
               onClick={() => handleSocialLogin('facebook')}
               disabled={loading}
-              className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+              className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50"
             >
               {loading ? (
                 <span>Processing...</span>
@@ -82,11 +92,11 @@ export default function LoginPage() {
                 </>
               )}
             </button>
-            
+
             <button
               onClick={() => handleSocialLogin('apple')}
               disabled={loading}
-              className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+              className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50"
             >
               {loading ? (
                 <span>Processing...</span>
@@ -100,9 +110,9 @@ export default function LoginPage() {
               )}
             </button>
           </div>
-          
-          <p className="mt-6 text-center text-sm text-gray-600">
-            By signing in, you agree to our <a href="#" className="font-medium text-blue-600 hover:text-blue-500">Terms of Service</a> and <a href="#" className="font-medium text-blue-600 hover:text-blue-500">Privacy Policy</a>.
+
+          <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+            By signing in, you agree to our <a href="#" className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Terms of Service</a> and <a href="#" className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">Privacy Policy</a>.
           </p>
         </div>
       </div>

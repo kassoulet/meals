@@ -9,15 +9,15 @@ interface SlotCalendarGridProps {
   meals: any[];
   householdId: string;
   startDate?: Date;
-  onSlotUpdate: (slot: Slot) => void;
+  onSlotUpdate?: (slot: Slot) => void;
   onSlotToggle: (slotId: string, updates: Partial<Slot>) => void;
   onSlotAssignMeal: (slotId: string, mealId: string | null) => void;
 }
 
-export default function SlotCalendarGrid({ 
-  slots, 
-  meals, 
-  householdId, 
+export default function SlotCalendarGrid({
+  slots,
+  meals,
+  householdId,
   startDate: initialDate,
   onSlotUpdate,
   onSlotToggle,
@@ -65,35 +65,35 @@ export default function SlotCalendarGrid({
   // Get slots for a specific date and slot type
   const getSlotForDateAndType = (date: Date, slotType: 'lunch' | 'dinner') => {
     const dateStr = dateUtils.formatDate(date);
-    return slots.find(slot => 
-      slot.date === dateStr && 
+    return slots.find(slot =>
+      slot.date === dateStr &&
       slot.slot_type === slotType
     );
   };
 
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-md">
-      <div className="px-4 py-5 border-b border-gray-200 sm:px-6">
+    <div className="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
+      <div className="px-4 py-5 border-b border-gray-200 dark:border-gray-700 sm:px-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
             Meal Planner
           </h3>
           <div className="flex items-center">
             <button
               onClick={prevWeek}
-              className="ml-2 inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="ml-2 inline-flex items-center px-3 py-1 border border-gray-300 dark:border-gray-600 text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
               Previous
             </button>
             <button
               onClick={goToCurrentWeek}
-              className="ml-2 inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="ml-2 inline-flex items-center px-3 py-1 border border-gray-300 dark:border-gray-600 text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
               Today
             </button>
             <button
               onClick={nextWeek}
-              className="ml-2 inline-flex items-center px-3 py-1 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="ml-2 inline-flex items-center px-3 py-1 border border-gray-300 dark:border-gray-600 text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
               Next
             </button>
@@ -104,22 +104,22 @@ export default function SlotCalendarGrid({
           {dateUtils.formatReadableDate(dateUtils.getWeekEnd(currentDate))}
         </p>
       </div>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 p-4">
         {weekDates.map((date, index) => {
           const dateStr = dateUtils.formatDate(date);
           const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
           const dayNumber = date.getDate();
-          
+
           // Get slots for this date
           const dateSlots = getSlotsForDate(date);
-          
+
           return (
-            <div key={dateStr} className="border rounded-lg p-3 bg-gray-50">
-              <div className="text-center font-medium text-gray-700">
+            <div key={dateStr} className="border rounded-lg p-3 bg-gray-50 dark:bg-gray-700">
+              <div className="text-center font-medium text-gray-700 dark:text-gray-300">
                 {dayName} {dayNumber}
               </div>
-              
+
               <div className="mt-2 space-y-2">
                 {/* Lunch slot */}
                 <SlotCell
@@ -130,7 +130,7 @@ export default function SlotCalendarGrid({
                   onToggle={onSlotToggle}
                   onAssignMeal={onSlotAssignMeal}
                 />
-                
+
                 {/* Dinner slot */}
                 <SlotCell
                   slot={getSlotForDateAndType(date, 'dinner')}

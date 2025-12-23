@@ -29,9 +29,9 @@ export default function SlotCell({
     if (slot.meal_id) return 'filled';
     return 'empty-active';
   };
-  
+
   const slotState = getSlotState();
-  
+
   // Handle meal assignment
   const handleAssignMeal = () => {
     if (slot) {
@@ -39,40 +39,40 @@ export default function SlotCell({
       setIsEditing(false);
     }
   };
-  
+
   // Handle toggling active state
   const handleToggleActive = () => {
     if (slot) {
       onToggle(slot.id, { is_active: !slot.is_active });
     }
   };
-  
+
   // Handle clearing meal assignment
   const handleClearMeal = () => {
     if (slot) {
       onAssignMeal(slot.id, null);
     }
   };
-  
+
   // Get meal name if meal is assigned
   const mealName = meals.find(meal => meal.id === slot?.meal_id)?.name || '';
-  
+
   // Determine CSS classes based on state
   const getStateClasses = () => {
     switch (slotState) {
       case 'filled':
-        return 'bg-green-100 border-green-300 text-green-800';
+        return 'bg-green-100 border-green-300 text-green-800 dark:bg-green-900/30 dark:border-green-700 dark:text-green-200';
       case 'empty-active':
-        return 'bg-yellow-100 border-yellow-300 text-yellow-800';
+        return 'bg-yellow-100 border-yellow-300 text-yellow-800 dark:bg-yellow-900/30 dark:border-yellow-700 dark:text-yellow-200';
       case 'inactive':
-        return 'bg-gray-200 border-gray-300 text-gray-500 line-through';
+        return 'bg-gray-200 border-gray-300 text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400 line-through';
       case 'empty':
-        return 'bg-white border-gray-300 text-gray-500';
+        return 'bg-white border-gray-300 text-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400';
       default:
-        return 'bg-white border-gray-300 text-gray-500';
+        return 'bg-white border-gray-300 text-gray-500 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400';
     }
   };
-  
+
   return (
     <div className={`border rounded-md p-2 min-h-[80px] ${getStateClasses()}`}>
       <div className="flex justify-between items-start">
@@ -83,9 +83,9 @@ export default function SlotCell({
           <button
             onClick={handleToggleActive}
             className={`text-xs px-1.5 py-0.5 rounded ${
-              slot?.is_active 
-                ? 'bg-blue-100 text-blue-800 hover:bg-blue-200' 
-                : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+              slot?.is_active
+                ? 'bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900/50 dark:text-blue-200 dark:hover:bg-blue-800'
+                : 'bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
             }`}
             title={slot?.is_active ? 'Active - Click to deactivate' : 'Inactive - Click to activate'}
           >
@@ -94,7 +94,7 @@ export default function SlotCell({
           {slotState === 'filled' && (
             <button
               onClick={handleClearMeal}
-              className="text-xs px-1.5 py-0.5 bg-red-100 text-red-800 rounded hover:bg-red-200"
+              className="text-xs px-1.5 py-0.5 bg-red-100 text-red-800 rounded hover:bg-red-200 dark:bg-red-900/50 dark:text-red-200 dark:hover:bg-red-800"
               title="Clear meal assignment"
             >
               X
@@ -102,14 +102,14 @@ export default function SlotCell({
           )}
         </div>
       </div>
-      
+
       <div className="mt-1">
         {isEditing ? (
           <div className="space-y-2">
             <select
               value={selectedMealId || ''}
               onChange={(e) => setSelectedMealId(e.target.value || null)}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+              className="block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             >
               <option value="">Select a meal...</option>
               {meals.map(meal => (
@@ -121,28 +121,28 @@ export default function SlotCell({
             <div className="flex space-x-2">
               <button
                 onClick={handleAssignMeal}
-                className="flex-1 text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="flex-1 text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
               >
                 Save
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="flex-1 text-xs px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                className="flex-1 text-xs px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
               >
                 Cancel
               </button>
             </div>
           </div>
         ) : slotState === 'filled' ? (
-          <div 
-            className="text-sm cursor-pointer hover:bg-opacity-50"
+          <div
+            className="text-sm cursor-pointer hover:bg-opacity-50 dark:hover:bg-opacity-20"
             onClick={() => setIsEditing(true)}
           >
             <span className="font-medium">{mealName}</span>
           </div>
         ) : slotState === 'empty-active' ? (
-          <div 
-            className="text-sm cursor-pointer hover:bg-opacity-50"
+          <div
+            className="text-sm cursor-pointer hover:bg-opacity-50 dark:hover:bg-opacity-20"
             onClick={() => setIsEditing(true)}
           >
             <span className="italic">Click to assign meal</span>
